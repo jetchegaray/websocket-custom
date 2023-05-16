@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g fill="#1B7D40" fill-rule="nonzero" transform="translate(-308.000000, -746.000000) translate(308.164063, 746.226154)">
+                    <ellipse cx="10.402" cy="10.242" rx="10.402" ry="10.242"/>
+                </g>
+                <text fill="#FFF" font-size="13" font-weight="400" transform="translate(-308.000000, -746.000000) translate(308.164063, 746.226154)">
+                    <tspan x="6.836" y="14.774">$</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

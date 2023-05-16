@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "axios": "^1.4.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^6.3.0",
+    "i": "^0.3.7",
+    "npm": "^9.6.6",
+    "ua-parser-js": "^1.0.35",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0"
+  }
+}
