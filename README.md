@@ -3,19 +3,23 @@
 ## Project 
 
 This is a project which implement a websocket low level with the library [WS Npm Package](https://www.npmjs.com/package/ws), [WS Git Repo](https://github.com/websockets/ws). 
-The frontend has a crypto widget to convert from one crypto to another, when it is written something in the input from, the front will send a message to the back, while the backend will receieve that message, it will send a request to the min-api-cryptocompare [Crypto compare](https://min-api.cryptocompare.com/) to get a price for those two cyrpto currencies, and it will returns another message to the frontend which will update its widget.   
+The frontend has a crypto widget to convert from one crypto to another, when it is written something in the input from, the front will send a message to the back, while the backend will    
+receieve that message, it will send a request to the min-api-cryptocompare [Crypto compare](https://min-api.cryptocompare.com/) to get a price for those two cyrpto currencies, and it will 
+returns another message to the frontend which will update its widget.   
 
-The idea is using this implementation to write your own subclass channel at the backend which should connect to your favourite exchange/liquidity provider to get a quote and trade the corresponding currencies, using an API to connect to the exchange as I provided or another webSocket connection. I don't recommend this last option, the last section of this file will explore pros and cons
+The idea is using this implementation to write your own subclass channel at the backend which should connect to your favourite exchange/liquidity provider to get a quote and trade the 
+corresponding currencies, using an API to connect to the exchange as I provided or another webSocket connection. I don't recommend this last option, the last section of this file will 
+explore pros and cons
 
 ## How I run it ? 
 
-$cd backend
-$npm i | npm start
+**$** cd backend
+**$** npm i | npm start
 
 then frontend preferibly in another console
 
-$cd frontend
-$npm i | npm start
+**$** cd frontend
+**$** npm i | npm start
 
 
  ## Environment variables 
@@ -69,20 +73,26 @@ $npm i | npm start
   
   
  #### Crypto Compare Session 
-    you should implement one of this class, similar to this one when a liquidity provider integration happens. 
-    - it manages the getQuote method which matches to the operation updateSession in the channel. 
-    - it manages the runningQuotes, and pending. 
-    - it is the class which actually is calling the Rest Api in my case or the exchange in the best case escenario. 
-    - it calculates a fixed comission of 1% in the transaction. 
-    - it could be a redis implementation talking to this class to save running or pending or lastest quotes. 
+   you should implement one of this class, similar to this one when a liquidity provider integration happens. 
+   - it manages the getQuote method which matches to the operation updateSession in the channel. 
+   - it manages the runningQuotes, and pending. 
+   - it is the class which actually is calling the Rest Api in my case or the exchange in the best case escenario. 
+   - it calculates a fixed comission of 1% in the transaction. 
+   - it could be a redis implementation talking to this class to save running or pending or lastest quotes. 
 
 
   
 ### Frontend code ::: 
 
 #### WebSocketcontext 
+   - it is a react context which handles the client side connection of the websocket which its corresponding events listeners open, close, message, and the methods send, subscribe to a channel and unsubscribe to a channel
+   - it also handles the subscriptions and the messages
 
-#### 
+#### SocketSwapCrytoCompare
+   It implement a channel in the client side for an specific provider. we should create one of this per liquidity provider/exchange. 
+   - implements the sendQuote, acceptOffer, actionOrderSuccess, actionOrderFailed, actionOfferFailed methods for a channel and connect to and disconnect from the channel. 
+    
+ 
 
 ## Messages types 
 
@@ -114,6 +124,10 @@ $npm i | npm start
 }
  ```
 
+## Demo
+
+[demo-websocket-exchange-trading.webm](https://github.com/jetchegaray/websocket-custom/assets/4106048/65294017-2411-4b40-89a5-a3ebf2911b3b)
+
     
-    
+## Pros & Cons of the proyect and WebSocket in general 
      
