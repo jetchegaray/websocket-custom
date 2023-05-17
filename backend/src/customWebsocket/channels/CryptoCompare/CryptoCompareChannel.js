@@ -25,7 +25,7 @@ class CryptoCompareChannel extends Channel {
     }
   }
 
-  //not being called, but when you want to connect to a real liquidity provider, it will be necessary
+  //not being called, but when you want to connect to a real exchange, it will be necessary
   async placeOrder(ws, data) {
     const session = this.#sessions[data?.key];
     if (!session) return;

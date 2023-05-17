@@ -128,7 +128,7 @@ class CryptoCompareSession {
   };
 
   async sendOrder(userData, quote) {
-    //we should implement the execute trade in the liquidity provider.
+    //we should implement it when executing the trade to a real exchange
   }
 
   clear() {

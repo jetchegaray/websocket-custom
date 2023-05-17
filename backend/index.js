@@ -37,7 +37,7 @@ const pingInterval = setInterval(() => {
 
 wss.on("connection", async (ws, req) => {
   // authenticate & attach user data to ws
-  console.log("quiere autenticar");
+  console.log("Authentication....");
   ws.userData = await authenticate(req);
 
   if (ws.userData.error) {
@@ -122,7 +122,6 @@ async function authenticate(req) {
     } catch {
       /* don't die */
     }
-    console.log("retorna conextion");
 
     return {
       ip,
