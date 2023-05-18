@@ -14,14 +14,17 @@ You can define an API to connect to the exchange, as I provided, or another web 
 
 ## How do I run it?
 
-**$** cd backend
-**$** npm i | npm start
+```
+$ cd backend
+$ npm i | npm start
+```
 
 then frontend, preferably on another console.
 
-**$** cd frontend
-**$** npm i | npm start
-
+```
+$ cd frontend
+$ npm i | npm start
+```
 
  ## Environment variables
 
@@ -130,7 +133,7 @@ It implements a channel on the client side for a specific provider. We should cr
 ## Last considerations
   - To prevent information leakage, use the WebSocket Secure (wss://) protocol. Like HTTPS, wss doesn’t mean your web application is secure, but ensures that data transmission is encrypted using Transport Layer Security (TLS).
   - It could be tricky if you don't use a load balancer layer 4 for websocket. for example if you use a load balancer or proxy layer 7 which support websocket could be challenging. As you know in Layer 7 proxy has to break the TLS, it has to terminate the TLS most of the times, in order to look at the 7 layer data which is HTTP, and the moment it does that it has to create its own TCP connections, one biderectional between the proxy-server and another one between client-proxy, so it is a mess and it could lead to leaks and misfunctioning 
-     
+  - A desirable enhancement could be having a Redis cache for prices    
 
 ## Demo
 
