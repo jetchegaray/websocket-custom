@@ -10,25 +10,27 @@ const CoinIcon = ({
 }) => {
   const coin = getCoin(currency);
   return (
-    <span className={`coin-icon ${className}`}>
-      <img
+    <>
+      <span className={`coin-icon ${className}`}>
+        {/* <img
         className="chart-logo"
         src={require("../UI/img/btc-symbol.svg")}
         alt={coin.name}
         title={coin.name}
-      />
+      /> */}
 
-      {breakLine ? (
-        <br />
-      ) : (
-        <>
-          {(showTicker || showLongName) &&
-            (showSymbol ? <>&nbsp;&nbsp;</> : "")}
-        </>
-      )}
-      {showTicker && <span className="d-inline">{coin.ticker}</span>}
-      {showLongName && <span className="d-inline">{coin.name}</span>}
-    </span>
+        {breakLine ? (
+          <br />
+        ) : (
+          <>
+            {(showTicker || showLongName) &&
+              (showSymbol ? <>&nbsp;&nbsp;</> : "")}
+          </>
+        )}
+        {showTicker && <span className="d-inline">{coin.ticker}</span>}
+        {showLongName && <span className="d-inline">{coin.name}</span>}
+      </span>
+    </>
   );
 };
 

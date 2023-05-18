@@ -108,7 +108,7 @@ const SwapWidget = () => {
         >
           {coinItems.map((coinItem) => (
             <option key={coinItem.ticker} value={coinItem.ticker}>
-              <CoinIcon currency={coinItem.ticker} />
+              {coinItem.ticker}
             </option>
           ))}
         </select>
@@ -139,7 +139,7 @@ const SwapWidget = () => {
         >
           {coinItems.map((coinItem) => (
             <option key={coinItem.ticker} value={coinItem.ticker}>
-              <CoinIcon currency={coinItem.ticker} />
+              {coinItem.ticker}
             </option>
           ))}
         </select>
