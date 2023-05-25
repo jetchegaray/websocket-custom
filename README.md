@@ -1,5 +1,17 @@
 # websocket-custom
 
+## Table of Contents
+
+1. [Project](#Project)
+2. [Environment variables](#Environment-variables)
+3. [Install & Run](#Install-&-Run)
+4. [Brief explanation backend code](#Brief-explanation-backend-code)
+5. [Brief explanation frontend code](#Brief-explanation-frontend-code)
+6. [Message types](#Message-types)
+7. [Last considerations](#Last-considerations)
+8. [Demo](#Demo)
+   
+
 ## Project 
 
 The idea of this project is to provide an architecture of low-level hierarchies and composition classes to reuse if you want to connect a websocket to your favorite exchange or liquidity provider for trading. The only thing you have to do is inherit your own channel and session at the backend and for your corresponding provider, and implement the methods getQuote and acceptOffer to interact with your exchange. It could be useful too if you have your own utility token in an own HotWallet running in some node, this would avoid external connections. 
@@ -12,7 +24,24 @@ returns another message to the frontend, which will update its widget.
 
 You can define an API to connect to the exchange, as I provided, or another web socket connection from the exchange back to your provider. [The last section](#last-considerations) of this file will try to explore the pros and cons.
 
-## How do I run it?
+ ## Environment variables
+
+### Back ::  
+Rename the .env.example to .env
+
+```
+  WS_PORT=3030
+  CRYPTOCOMPARE_REST_BASE_URL=https://min-api.cryptocompare.com/
+```
+### Front :: 
+Rename the .env.example to .env
+
+```
+REACT_APP_WS_URL=ws://localhost:3030/ws
+REACT_APP_WS_DISABLED=0 # 1 = disabled
+```
+
+## Install & Run
 
 ```
 $ cd backend
@@ -26,28 +55,31 @@ $ cd frontend
 $ npm i | npm start
 ```
 
- ## Environment variables
 
-### Back ::  
-Rename the .env.example to .env
-  WS_PORT=3030
-  CRYPTOCOMPARE_REST_BASE_URL=https://min-api.cryptocompare.com/
+### Brief explanation backend code 
 
-### Front :: 
-Rename the .env.example to .env
-  REACT_APP_WS_URL=ws://localhost:3030/ws
-REACT_APP_WS_DISABLED=0 # 1 = disabled
-  
-### Backend code ::: 
+ ```
+ .
+├── .env (Make sure to create this file locally and fill the env vars, take a look of the .env.example)
+├──  index.js (it will create the webserver to create on it the websocket connection)
+├── src
+│   ├── channelManager.js (Manage channels interacting with a websocket server. Handles subscribe, unsubscribe, current, and all other methods defined on the subclass.)
+│   ├── channel.js (Base class for a subscribable websocket channel)
+│   │ cache-redis (Module implementation of redis)
+│   │  
+│   ├── CryptoCompare (you should have one of this folder for any of your providers)
+│   │   ├── CryptoCompareChannel.js (Subclass of the channel class to implement the messages handler to and from my provider)
+│   │   ├── CryptoCompareRest.js (Connection to the API rest in this case of the provider, could be another websocket)
+│   │   └── CryptoCompareSession.js (Manages the session and the channel of the provider, You should implement one session for your liquidity provider)
+│   │ 
+└── 
+```
 
 #### Index.js 
   - it will create the webserver to create on it the websocket connection, besides the fact that a websocket connection is stateful, the handshake will be on http, and it will listen for connections, closes, and messages.
 It calls an authentication method that could be rewritten; in this case, it will look for the headers x-forwarded-for, user-agent, and sec-websocket-key in order to provide some information if you want to get an account in a database and save the handshake request. Every user will have an id and a uuid to link them to a connection pool. 
   - the handle The message will be forwarded to the channel. Manager
     
-#### ChannelManager 
-  - Manage channels interacting with a websocket server. Handles subscribe, unsubscribe, current, and all other methods defined on the subclass.
-
 #### Channel 
   - Base class for a subscribable websocket channel
   - Subscriptions run at `intervalMs`, adjust with the setter.
@@ -79,7 +111,7 @@ It should be a timeout for each quote; it is the time gap between when a client 
   
   
  #### Crypto Compare Session
-You should implement one of these classes, similar to this one, when a liquidity provider integration happens.
+You should implement one of this class, similar to this one, when a liquidity provider integration happens.
   - It manages the getQuote method, which matches the operation updateSession in the channel.
   - It manages the running quotes and pending.
   - It is the class that is actually called the Rest Api in my case or the exchange in the best-case scenario.
@@ -88,7 +120,23 @@ You should implement one of these classes, similar to this one, when a liquidity
 
 
   
-### Frontend code ::: 
+### Brief explanation frontend code
+
+
+ ```
+ .
+├── .env (Make sure to create this file locally and fill the env vars, take a look of the .env.example)
+├── public (static resources)
+├── src
+│   ├── components 
+│   │   └── SwapWidget.jsx (main component to show the widget and it interacts to the SocketSwapCryptoCurrency.jsx)  
+│   │  
+│   ├── hooks 
+│   │   ├── SocketSwapCryptoCurrency.js (Implements the interactions(messages) to the channel on the backend)
+│   │   └── WebSocketContext.js (Implmentation low level of the websocket in the frontend side, uses the session and channelmanager to send and receieve messages to and from the beackend)
+│   │ 
+└── 
+```
 
 #### WebSocketcontext 
 It is a react context that handles the client side connection of the websocket and its corresponding events: listeners open, close, message, and the methods send, subscribe to a channel, and unsubscribe from a channel.
